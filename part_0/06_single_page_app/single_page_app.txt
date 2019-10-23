@@ -1,0 +1,21 @@
+title Single Page App Sequence
+
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/spa
+server-->browser: html
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+server-->browser: main.js
+
+note over browser:
+browser starts executing script that 
+creates an asynchronous request
+end note
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: data.json including all notes
+
+note over browser:
+the event handler is triggered and 
+the callback function renders notes to display
+end note
