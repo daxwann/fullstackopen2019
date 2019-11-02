@@ -26,7 +26,10 @@ const Feedback = ({handleClick, values}) => {
 
 const Statistic = (props) => {
   return (
-    <p>{props.text} {props.value}</p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
@@ -56,12 +59,16 @@ const Statistics = ({ values }) => {
   return (
     <div>
       <h2>statistics</h2>
-      <Statistic text="good" value={values.good} />
-      <Statistic text="neutral" value={values.neutral} />
-      <Statistic text="bad" value={values.bad} />
-      <Statistic text="all" value={sum(values)} />
-      <Statistic text="average" value={average(values)} />
-      <Statistic text="positive" value={positive(values)} />
+      <table>
+        <tbody>
+          <Statistic text="good" value={values.good} />
+          <Statistic text="neutral" value={values.neutral} />
+          <Statistic text="bad" value={values.bad} />
+          <Statistic text="all" value={sum(values)} />
+          <Statistic text="average" value={average(values)} />
+          <Statistic text="positive" value={positive(values)} />
+        </tbody>
+      </table>
     </div>
   )
 }
