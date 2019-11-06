@@ -2,32 +2,59 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Button = (props) => {
-	console.log("button");
 	return (
-  	<button onClick={props.handleClick}>next anecdote</button>
+  	<button onClick={props.handleClick}>{props.text}</button>
 	)
 }
 
 const Display = (props) => {
 	return (
   	<p>
-			{props.randomAnecdote}
+			{props.content}
 		</p>
 	)
 }
 
 const App = (props) => {
-  const [selected, setSelected] = useState(0)
+  const count = props.anecdotes.length
+  const getRandomNum = (max) => Math.floor(Math.random() * max)
 
-	const setRandomSelection = (max, setSelected) => {
-		const rand = Math.floor(Math.random() * max);
-		setSelected(rand);
+  // hooks
+  const [selected, setSelected] = useState(getRandomNum(count))
+  const [votes, setVotes] = useState(new Array(count).fill(0))
+
+  // callbacks
+	const setRandomSelection = (max, selected, setSelected) => {
+    return (
+      () => {
+        let rand = getRandomNum(max);
+
+        while (rand === selected) {
+          rand = getRandomNum(max);
+        }
+
+        setSelected(rand);
+      }
+    )
 	}
 
+  const addVote = (selected, votes, setVotes) => {
+    return (
+      () => {
+        const copy = [...votes];
+        copy[selected] += 1;
+        setVotes(copy);
+      }
+    )
+  }
+
+  // render
   return (
     <div>
-      <Display randomAnecdote={props.anecdotes[selected]} />
-			<Button handleClick={() => setRandomSelection(props.anecdotes.length, setSelected)}/>
+      <Display content={props.anecdotes[selected]} />
+      <Display content={"has " + votes[selected] + " votes"} />
+      <Button handleClick={addVote(selected, votes, setVotes)} text="vote"></Button>
+			<Button handleClick={setRandomSelection(count, selected, setSelected)} text="next anecdote"/>
     </div>
   )
 }
