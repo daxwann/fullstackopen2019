@@ -15,6 +15,14 @@ const Display = (props) => {
 	)
 }
 
+const Heading = (props) => {
+  return (
+    <h2>
+      {props.content}
+    </h2>
+  )
+}
+
 const App = (props) => {
   const count = props.anecdotes.length
   const getRandomNum = (max) => Math.floor(Math.random() * max)
@@ -48,13 +56,19 @@ const App = (props) => {
     )
   }
 
+  // functions
+  const mostVotes = votes => votes.indexOf(Math.max(...votes));
+
   // render
   return (
     <div>
+      <Heading content="Anecdote of the day" />
       <Display content={props.anecdotes[selected]} />
       <Display content={"has " + votes[selected] + " votes"} />
       <Button handleClick={addVote(selected, votes, setVotes)} text="vote"></Button>
 			<Button handleClick={setRandomSelection(count, selected, setSelected)} text="next anecdote"/>
+      <Heading content="Anecdote with the most votes" />
+      <Display content={props.anecdotes[mostVotes(votes)]} />
     </div>
   )
 }
