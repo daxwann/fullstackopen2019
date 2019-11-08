@@ -4,7 +4,6 @@ import Part from './Part';
 const Content = ({content}) => {
 
   const listItems = (content) => {
-    console.log(content);
     return (
       content.map((part) => {
         return <Part key={part.id} part={part} />;
@@ -12,10 +11,19 @@ const Content = ({content}) => {
     )
   }
 
+  const sumExercises = (content) => {
+    return (
+      content.reduce((sum, currentPart) => sum + currentPart.exercises, 0)
+    )
+  }
+
   return (
-    <ul>
-      { listItems(content) }
-    </ul>
+    <div>
+      <ul>
+        { listItems(content) }
+      </ul>
+      <strong>total of {sumExercises(content)} exercises</strong>
+    </div>
   );
 }
 
