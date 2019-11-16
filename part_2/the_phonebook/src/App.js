@@ -11,16 +11,25 @@ const App = () => {
     return persons.map((person, i) => <Person key={i} person={person}/>)
   }
 
+  const nameExist = (name) => {
+    return persons.some((person) => person.name === name);
+  }
+
   const addPerson = (event) => {
     event.preventDefault();
     
-    const newPerson = {
-      name: newName
-    }
+    console.log(newName);
+    if(nameExist(newName)) {
+      alert(`${newName} is already added to phonebook`);
+    } else {   
+      const newPerson = {
+       name: newName
+      }
 
-    setPersons(persons.concat(newPerson));
+      setPersons(persons.concat(newPerson));
     
-    setNewName('');
+      setNewName('');
+    }
   }
 
   const handleNameInput = (event) => {
