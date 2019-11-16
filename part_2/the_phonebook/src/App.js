@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import Person from './components/Person'
+import NewPersonForm from './components/NewPersonForm'
+import FilterPersons from './components/FilterPersons'
+import DisplayPersons from './components/DisplayPersons'
 
 const App = () => {
   const seed = [
@@ -14,35 +16,6 @@ const App = () => {
   const [ newNumber, setNewNumber] = useState('')
   const [ searchTerm, setSearchTerm] = useState('')
 
-  const showRow = () => {
-    const regex = new RegExp(searchTerm, 'i');
-    const filtered = persons.filter(person => person.name.match(regex));
-
-    return filtered.map((person, i) => <Person key={i} person={person}/>);
-  }
-
-  const nameExist = (name) => {
-    return persons.some((person) => person.name === name);
-  }
-
-  const addPerson = (event) => {
-    event.preventDefault();
-    
-    if(nameExist(newName)) {
-      alert(`${newName} is already added to phonebook`);
-    } else {   
-      const newPerson = {
-       name: newName,
-       number: newNumber
-      }
-
-      setPersons(persons.concat(newPerson));
-    
-      setNewName('');
-      setNewNumber('');
-    }
-  }
-
   const handleInput = (callback, event) => {
     return (event) => { callback(event.target.value) };
   }
@@ -50,25 +23,20 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          filter shown with <input value={searchTerm} onChange={handleInput(setSearchTerm)}/>
-        </div>
-      </form>
+      <FilterPersons searchTerm={searchTerm} handleFilterInput={handleInput(setSearchTerm)} />
       <h2>Add New</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleInput(setNewName)}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleInput(setNewNumber)}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <NewPersonForm 
+        persons={persons}
+        setPersons={setPersons}
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+        handleNumberInput={handleInput(setNewNumber)}
+        handleNameInput={handleInput(setNewName)}
+      />
       <h2>Numbers</h2>
-      {showRow()}
+      <DisplayPersons persons={persons} searchTerm={searchTerm} />
     </div>
   )
 }
