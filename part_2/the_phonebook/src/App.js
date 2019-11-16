@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import NewPersonForm from './components/NewPersonForm'
 import FilterPersons from './components/FilterPersons'
 import DisplayPersons from './components/DisplayPersons'
 
 const App = () => {
-  const seed = [
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]
-
-  const [ persons, setPersons] = useState(seed)
+  const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ searchTerm, setSearchTerm] = useState('')
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
 
   const handleInput = (callback, event) => {
     return (event) => { callback(event.target.value) };
