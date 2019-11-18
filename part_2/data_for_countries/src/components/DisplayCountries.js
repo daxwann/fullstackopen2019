@@ -3,8 +3,6 @@ import CountryInfo from './CountryInfo';
 import CountryItem from './CountryItem';
 
 const DisplayCountries = props => {
-  
-
   const displayResult = () => {
     if (props.filter === '') {
       return (
@@ -25,7 +23,7 @@ const DisplayCountries = props => {
     if (props.countries.length > 1) {
       return (
         props.countries.map((country, i) => {
-          return <CountryItem key={i} name={country.name} />
+          return <CountryItem key={i} country={country} setCountries={props.setCountries}/>
         })
       )
     }

@@ -26,7 +26,8 @@ function App() {
         filter={filter} 
         setFilter={setFilter} 
         setCountries={setCountries}/>
-      <DisplayCountries countries={countries} filter={filter}/>
+      {console.log(countries)}
+      <DisplayCountries countries={countries} setCountries={setCountries} filter={filter}/>
     </div>
   );
 }
