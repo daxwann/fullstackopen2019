@@ -3,6 +3,7 @@ import CountryInfo from './CountryInfo';
 import CountryItem from './CountryItem';
 
 const DisplayCountries = props => {
+  
   const displayResult = () => {
     if (props.filter === '') {
       return (
@@ -17,7 +18,12 @@ const DisplayCountries = props => {
     } 
 
     if (props.countries.length === 1) {
-      return <CountryInfo country={props.countries[0]} />
+
+      return (
+        <CountryInfo 
+          weather={props.weather} 
+          country={props.countries[0]} />
+      )
     }
 
     if (props.countries.length > 1) {

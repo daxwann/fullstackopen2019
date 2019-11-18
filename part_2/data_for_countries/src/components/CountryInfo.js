@@ -1,4 +1,5 @@
 import React from 'react';
+import WeatherData from './WeatherData';
 
 const CountryInfo = props => {
   const listLanguages = () => {
@@ -19,6 +20,8 @@ const CountryInfo = props => {
       </ul>
 
       <img className="country__flag" src={props.country.flag} alt={props.country.name + ' flag'}></img>
+      <WeatherData 
+        weather={props.weather} />
     </div>
   )
 };

@@ -6,7 +6,6 @@ const CountryItem = props => {
     axios
       .get("https://restcountries.eu/rest/v2/alpha/" + props.country.alpha2Code)
       .then(response => {
-        console.log(response.data)
         props.setCountries([response.data])
       })
   }
