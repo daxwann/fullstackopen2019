@@ -18,6 +18,8 @@ function App() {
     }
   }
 
+	useEffect(searchCountries, [filter]);
+
   return (
     <div>
       <SearchCountries
