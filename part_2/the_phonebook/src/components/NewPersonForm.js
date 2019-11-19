@@ -21,7 +21,7 @@ const NewPersonForm = props => {
       }
 
       personService
-        .create(newPerson)
+        .createPerson(newPerson)
         .then(returnedPerson => {
           props.setPersons(props.persons.concat(returnedPerson));
 

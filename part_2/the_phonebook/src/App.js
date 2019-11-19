@@ -14,7 +14,6 @@ const App = () => {
     personService
       .getAll()
       .then(returnedPersons => {
-        console.log(returnedPersons);
         setPersons(returnedPersons);
       })
       .catch(error => {
@@ -42,7 +41,7 @@ const App = () => {
         handleNameInput={handleInput(setNewName)}
       />
       <h2>Numbers</h2>
-      <DisplayPersons persons={persons} searchTerm={searchTerm} />
+      <DisplayPersons persons={persons} setPersons={setPersons} searchTerm={searchTerm} />
     </div>
   )
 }
