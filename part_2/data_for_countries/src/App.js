@@ -21,8 +21,7 @@ function App() {
 
   const getWeatherData = () => {
     setWeather({})
-    console.log(countries.capital);
-    if (countries.length === 1 && countries.capital !== "") {
+    if (countries.length === 1 && countries[0].capital !== "") {
       axios
         .get("http://api.weatherstack.com/current?access_key=" + 
           process.env.REACT_APP_WEATHER_API_KEY + 
