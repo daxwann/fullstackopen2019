@@ -1,4 +1,5 @@
 import React from 'react';
+import personService from '../services/personService';
 
 const NewPersonForm = props => {
 
@@ -19,11 +20,18 @@ const NewPersonForm = props => {
        number: props.newNumber
       }
 
-      props.setPersons(props.persons.concat(newPerson));
+      personService
+        .create(newPerson)
+        .then(returnedPerson => {
+          props.setPersons(props.persons.concat(returnedPerson));
 
-      //clear inputs
-      props.setNewName('');
-      props.setNewNumber('');
+          //clear inputs
+          props.setNewName('');
+          props.setNewNumber('');
+        })
+        .catch(error => {
+          alert(`Failed to add ${newPerson.name}`);
+        })
     }
   }
 
