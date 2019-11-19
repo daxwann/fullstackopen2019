@@ -3,16 +3,28 @@ import personService from '../services/personService';
 
 const NewPersonForm = props => {
 
-  const nameExist = (name) => {
-    return props.persons.some((person) => person.name === name);
+  const findName = (name) => {
+    return props.persons.find(person => person.name === name);
+  }
+
+  const confirmUpdate = foundPerson => {
+    if (window.confirm(`${foundPerson.name} already exist in the phonebook. Do you want to replace the old number with the new one?`)) {
+      const updatedPerson = { ...foundPerson, number: props.newNumber }
+      personService
+        .updatePerson(foundPerson.id, updatedPerson)
+        .then(returnedPerson => {
+          
+        })
+    }
   }
 
   const addPerson = (event) => {
     event.preventDefault();
     
-    if(nameExist(props.newName)) {
-      // warn name exists
-      alert(`${props.newName} is already added to phonebook`);
+    const foundPerson = findName(props.newName);
+
+    if (foundPerson) {
+      confirmUpdate(foundPerson);
     } else {
       //create new person
       const newPerson = {
