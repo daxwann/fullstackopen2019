@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import personService from '../services/personService';
 
 const NewPersonForm = props => {
+
+  const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber] = useState('')
 
   const findName = (name) => {
     return props.persons.find(person => person.name === name);
@@ -9,14 +12,24 @@ const NewPersonForm = props => {
 
   const confirmUpdate = foundPerson => {
     if (window.confirm(`${foundPerson.name} already exist in the phonebook. Do you want to replace the old number with the new one?`)) {
-      const updatedPerson = { ...foundPerson, number: props.newNumber }
+      const updatedPerson = { ...foundPerson, number: newNumber }
+      console.log(updatedPerson);
+
       personService
         .updatePerson(foundPerson.id, updatedPerson)
         .then(returnedPerson => {
-          props.setPersons(props.persons.map(person => person.id !== foundPerson.id ? person : returnedPerson))
+          props.setPersons(props.persons.map(person => person.id !== foundPerson.id ? person : returnedPerson));
+
+          //success message
+          props.notify("success", `${returnedPerson.name}'s number has been updated`)
+
+          //clear inputs
+          setNewName('');
+          setNewNumber('');
         })
 				.catch(error => {
-					alert(`Failed to update number`);
+          //error message
+					props.notify("error", `${updatedPerson.name} has already been deleted`)
 				})
     }
   }
@@ -24,15 +37,15 @@ const NewPersonForm = props => {
   const addPerson = (event) => {
     event.preventDefault();
     
-    const foundPerson = findName(props.newName);
+    const foundPerson = findName(newName);
 
     if (foundPerson) {
       confirmUpdate(foundPerson);
     } else {
       //create new person
       const newPerson = {
-       name: props.newName,
-       number: props.newNumber
+       name: newName,
+       number: newNumber
       }
 
       personService
@@ -40,12 +53,15 @@ const NewPersonForm = props => {
         .then(returnedPerson => {
           props.setPersons(props.persons.concat(returnedPerson));
 
+          //success message
+          props.notify("success", `${returnedPerson.name}'s number has been added`)
+
           //clear inputs
-          props.setNewName('');
-          props.setNewNumber('');
+          setNewName('');
+          setNewNumber('');
         })
         .catch(error => {
-          alert(`Failed to add ${newPerson.name}`);
+          props.notify("error", `Failed to add ${newPerson.name}'s number`)
         })
     }
   }
@@ -53,10 +69,10 @@ const NewPersonForm = props => {
   return (
     <form onSubmit={addPerson}>
         <div>
-          name: <input value={props.newName} onChange={props.handleNameInput}/>
+          name: <input value={newName} onChange={props.handleInput(setNewName)}/>
         </div>
         <div>
-          number: <input value={props.newNumber} onChange={props.handleNumberInput}/>
+          number: <input value={newNumber} onChange={props.handleInput(setNewNumber)}/>
         </div>
         <div>
           <button type="submit">add</button>
@@ -64,6 +80,5 @@ const NewPersonForm = props => {
     </form>
   )
 }
-
 
 export default NewPersonForm;

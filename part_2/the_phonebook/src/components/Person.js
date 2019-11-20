@@ -3,7 +3,7 @@ import React from 'react';
 const Person = props => {
   const confirmDelete = () => {
     if (window.confirm(`Delete ${props.person.name}?`)) {
-      props.deletePerson(props.person.id);
+      props.deletePerson(props.person.id, props.person.name);
     }
   }
 

@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.notification {
+  padding: 10px;
+  margin: 10px auto;
+  width: 500px;
+  display: block;
+  background-color: blue;
+}
+
+.notification--success {
+  background-color: #8CFFC4;
+}
+
+.notification--error {
+  background-color: #EB8B7E;
+}

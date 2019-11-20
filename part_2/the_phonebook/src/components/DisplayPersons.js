@@ -14,9 +14,10 @@ const DisplayPersons = props => {
         .deletePerson(id)
         .then(response => {
           props.setPersons(props.persons.filter(p => p.id !== id));
+          props.notify("success", `Deleted ${name}`)
         })
         .catch(error => {
-          alert(`Failed to delete ${name}`);
+          props.notify("error", `Failed to delete ${name}`)
         })
     }
 
