@@ -13,8 +13,11 @@ const NewPersonForm = props => {
       personService
         .updatePerson(foundPerson.id, updatedPerson)
         .then(returnedPerson => {
-          
+          props.setPersons(props.persons.map(person => person.id !== foundPerson.id ? person : returnedPerson))
         })
+				.catch(error => {
+					alert(`Failed to update number`);
+				})
     }
   }
 
