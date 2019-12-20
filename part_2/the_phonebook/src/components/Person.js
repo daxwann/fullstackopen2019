@@ -9,7 +9,7 @@ const Person = props => {
 
   return (
     <div>
-      {props.person.name} {props.person.number} <button onClick={confirmDelete}>delete</button>
+      {props.person.name} {props.person.number} {props.person.id} <button onClick={confirmDelete}>delete</button>
     </div>
   )
 }

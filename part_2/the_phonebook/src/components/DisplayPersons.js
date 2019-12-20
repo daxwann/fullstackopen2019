@@ -10,6 +10,7 @@ const DisplayPersons = props => {
     });
 
     const deletePerson = (id, name) => {
+			console.log(id);
       personService
         .deletePerson(id)
         .then(response => {
