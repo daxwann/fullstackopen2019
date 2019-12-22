@@ -13,12 +13,17 @@ const NewPersonForm = props => {
   const confirmUpdate = foundPerson => {
     if (window.confirm(`${foundPerson.name} already exist in the phonebook. Do you want to replace the old number with the new one?`)) {
       const updatedPerson = { ...foundPerson, number: newNumber }
-      console.log(updatedPerson);
 
       personService
         .updatePerson(foundPerson.id, updatedPerson)
         .then(returnedPerson => {
-          props.setPersons(props.persons.map(person => person.id !== foundPerson.id ? person : returnedPerson));
+          props.setPersons(props.persons.map(person => {
+            if (person.id !== foundPerson.id) {
+              return person;
+            } else {
+              return returnedPerson;
+            }
+          }));
 
           //success message
           props.notify("success", `${returnedPerson.name}'s number has been updated`)
