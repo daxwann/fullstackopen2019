@@ -3,7 +3,7 @@ import { voteForAnecdote } from '../reducers/anecdoteReducer';
 import { setNotification, removeNotification } from '../reducers/notificationReducer';
 
 const AnecdoteList = ({ store }) => {
-  const { anecdotes } = store.getState();
+  const { anecdotes, filter } = store.getState();
 
   const getAnecdote = (id) => {
     const foundAnecdote = anecdotes.find(a => a.id === id);
@@ -19,9 +19,17 @@ const AnecdoteList = ({ store }) => {
     }, 5000);
   };
 
+  const filterAnecdotes = () => {
+    if (!filter || filter.length === 0) {
+      return anecdotes;
+    }
+
+    return anecdotes.filter(a => a.content.includes(filter));
+  }
+
   return (
     <div>
-      {anecdotes.map(anecdote =>
+      {filterAnecdotes().map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
