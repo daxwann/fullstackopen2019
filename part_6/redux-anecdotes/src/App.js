@@ -3,19 +3,24 @@ import AnecdoteForm from './components/AnecdoteForm';
 import AnecdoteList from './components/AnecdoteList';
 import Notification from './components/Notification';
 import Filter from './components/Filter';
+import { connect } from 'react-redux';
 
-const App = ({ store }) => {
-  const { notification } = store.getState();
+const App = (props) => {
+  const { notification } = props;
 
   return (
     <div>
       <h2>Anecdotes</h2>
-      <Filter store={store} />
-      { notification.on && <Notification store={store}/>}
-      <AnecdoteList store={store} />
-      <AnecdoteForm store={store} />
+      <Filter />
+      { notification.on && <Notification />}
+      <AnecdoteList />
+      <AnecdoteForm />
     </div>
   )
 }
 
-export default App
+const mapStateToProps = (state) => ({
+  notification: state.notification,
+})
+
+export default connect(mapStateToProps)(App);
