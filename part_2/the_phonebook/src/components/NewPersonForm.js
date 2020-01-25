@@ -55,18 +55,18 @@ const NewPersonForm = props => {
 
       personService
         .createPerson(newPerson)
-        .then(returnedPerson => {
-          props.setPersons(props.persons.concat(returnedPerson));
+        .then(createdPerson => {
+          props.setPersons(props.persons.concat(createdPerson));
 
           //success message
-          props.notify("success", `${returnedPerson.name}'s number has been added`)
+          props.notify("success", `${createdPerson.name}'s number has been added`)
 
           //clear inputs
           setNewName('');
           setNewNumber('');
         })
         .catch(error => {
-          props.notify("error", `Failed to add ${newPerson.name}'s number`)
+          props.notify("error", `${error.response.data.error}`)
         })
     }
   }
