@@ -1,7 +1,5 @@
 // reducer
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
 const anecdoteReducer = (state = [], action) => {
   switch (action.type) {
     case 'VOTE_ANECDOTE':
@@ -17,11 +15,11 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT_ANECDOTES':
       return action.data;
     case 'ADD_ANECDOTE':
-      const content = action.data.content;
+      const data = action.data;
       const newAnecdote = {
-        content: content,
-        id: getId(),
-        votes: 0
+        content: data.content,
+        id: data.id,
+        votes: data.votes
       }
       return [...state, newAnecdote];
     default:
@@ -38,12 +36,19 @@ export const voteForAnecdote = (id) => {
   });
 };
 
-export const addAnecdote = (content) => {
+export const addAnecdote = (data) => {
   return ({
     type: 'ADD_ANECDOTE',
-    data: { content }
+    data: data
   })
 };
+
+export const initAnecdotes = (anecdotes) => {
+  return ({
+    type: 'INIT_ANECDOTES',
+    data: anecdotes
+  })
+}
 
 export default anecdoteReducer;
 
